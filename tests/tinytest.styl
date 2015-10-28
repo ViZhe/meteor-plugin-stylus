@@ -19,8 +19,11 @@ $dashy = dashed
 
 
 // Postcss-svg
-.stylus_svg
-    background-image svg('./tests/tinytest.svg', 'fill: red')
+.stylus_svg_absolute
+    background-image svg('./tests/tinytest.svg', '[fill]: red')
+
+.stylus_svg_relative
+    background-image svg('tinytest.svg', '[fill]: blue')
 
 
 // Postcss-zindex
@@ -34,8 +37,8 @@ $dashy = dashed
 
 
 // Stylus import
-.stylus_import_relative
-@import 'tinytest.import'
-
 .stylus_import_absolute
-@import './tests/tinytest.import'
+    @import './tests/tinytest.import'
+
+.stylus_import_relative
+    @import 'tinytest.import'

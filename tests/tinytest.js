@@ -51,16 +51,24 @@ stylusTest(
 
 // Postcss-svg
 stylusTest(
-    'stylus - svg',
+    'stylus - svg absolute',
     'stylus_test_svg',
-    'stylus_svg',
+    'stylus_svg_absolute',
     'background-image',
-    'url(data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2046.11%2046.11%22%3E%3Cpath%20d%3D%22M23.054%200C10.342%200%200%2010.342%200%2023.055S10.342%2046.11%2023.055%2046.11%2046.11%2035.768%2046.11%2023.055%2035.768%200%2023.054%200zm0%2039.11C14.2%2039.11%207%2031.908%207%2023.055S14.2%207%2023.054%207c8.853%200%2016.056%207.202%2016.056%2016.055S31.907%2039.11%2023.054%2039.11z%22%2F%3E%3C%2Fsvg%3E)'
+    'url(data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2046.11%2046.11%22%20fill%3D%22red%22%3E%3Cpath%20d%3D%22M23.054%200C10.342%200%200%2010.342%200%2023.055S10.342%2046.11%2023.055%2046.11%2046.11%2035.768%2046.11%2023.055%2035.768%200%2023.054%200zm0%2039.11C14.2%2039.11%207%2031.908%207%2023.055S14.2%207%2023.054%207c8.853%200%2016.056%207.202%2016.056%2016.055S31.907%2039.11%2023.054%2039.11z%22%2F%3E%3C%2Fsvg%3E)'
+);
+
+stylusTest(
+    'stylus - svg relative',
+    'stylus_test_svg',
+    'stylus_svg_relative',
+    'background-image',
+    'url(data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2046.11%2046.11%22%20fill%3D%22%2300f%22%3E%3Cpath%20d%3D%22M23.054%200C10.342%200%200%2010.342%200%2023.055S10.342%2046.11%2023.055%2046.11%2046.11%2035.768%2046.11%2023.055%2035.768%200%2023.054%200zm0%2039.11C14.2%2039.11%207%2031.908%207%2023.055S14.2%207%2023.054%207c8.853%200%2016.056%207.202%2016.056%2016.055S31.907%2039.11%2023.054%2039.11z%22%2F%3E%3C%2Fsvg%3E)'
 );
 
 // Postcss-zindex
 stylusTest(
-    'stylus - zindex is first',
+    'stylus - zindex first',
     'stylus_test_zindex',
     'stylus_zindex_first',
     'z-index',
@@ -68,7 +76,7 @@ stylusTest(
 );
 
 stylusTest(
-    'stylus - zindex is second',
+    'stylus - zindex second',
     'stylus_test_zindex',
     'stylus_zindex_second',
     'z-index',
@@ -77,17 +85,17 @@ stylusTest(
 
 // Stylus import
 stylusTest(
-    'stylus - import relative',
+    'stylus - import absolute',
     'stylus_test_import',
-    'stylus_import_relative',
+    'stylus_import_absolute',
     'font-size',
     '20px'
 );
 
 stylusTest(
-    'stylus - import absolute',
+    'stylus - import relative',
     'stylus_test_import',
-    'stylus_import_absolute',
+    'stylus_import_relative',
     'font-size',
     '20px'
 );
