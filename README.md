@@ -5,10 +5,26 @@
 providing an efficient, dynamic, and expressive way to generate CSS.
 Supporting both an indented syntax and regular CSS style.
 
-### NOTE
-This may not be compatible with other Meteor Stylus libraries. Please
-uninstall anything related to Stylus before running this, otherwise your
-application may fail with a fibers-related error.
+### Options
+For configure the package, create the file `/config/stylus.json`.
+Default options:
+```
+{
+    "url": {
+        "limit": 30000
+    },
+    "autoprefixer": {
+        "browser": ["last 2 versions",
+                    "Explorer >= 10",
+                    "Android >= 4.1",
+                    "Safari >= 7",
+                    "iOS >= 7"]
+    },
+    "svg": {
+        "svgo": true
+    }
+}
+```
 
 ### Imports
 If you want to `@import` a file, give it the extension `.import.styl`
@@ -30,5 +46,8 @@ Run command
 ```
 meteor test-packages ./
 ```
-### TODO
- * add stylus.json config
+
+### NOTE
+This may not be compatible with other Meteor Stylus libraries. Please
+uninstall anything related to Stylus before running this, otherwise your
+application may fail with a fibers-related error.
