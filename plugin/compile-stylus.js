@@ -1,4 +1,5 @@
 
+var fsjson = Npm.require('fs-json')();
 var path = Npm.require('path');
 var stylus = Npm.require('stylus');
 var poststylus = Npm.require('poststylus');
@@ -6,44 +7,29 @@ var autoprefixer = Npm.require('autoprefixer');
 var svg = Npm.require('postcss-svg');
 var zindex = Npm.require('postcss-zindex');
 
-// for next
-// {
-//     'autoprefixerEnable': true,
-//     'autoprefixer': {
-//         'browser': ['last 2 versions',
-//                     'Explorer >= 10',
-//                     'Android >= 4.1',
-//                     'Safari >= 7',
-//                     'iOS >= 7']
-//     },
-//     'imageInlinerEnable': true,
-//     'imageInliner': {
-//         'assetPaths': [],
-//         'maxFileSize': 30000
-//     },
-//     'svgEnable': true,
-//     'svg': {
-//         'svgo': true,
-//         'maxFileSize': 30000
-//     }
-// }
-
 
 Plugin.registerSourceHandler('styl', {archMatching: 'web'}, function (compileStep) {
+
+
+    var options = fsjson.loadSync('./plugin/stylus.json');
+    var file = fsjson.loadSync('./config/stylus.json');
+
+    if(!file) {
+        file = options;
+    }
+    var config = {
+        url: file.url || {},
+        autoprefixer: file.autoprefixer || options.autoprefixer,
+        svg: file.svg || options.svg
+    };
+
+
     var source = compileStep.read().toString('utf8');
     var compiler = stylus(source)
-        .define('url', stylus.url())
+        .define('url', stylus.url(config.url))
         .use(poststylus([
-            autoprefixer({
-                browsers: ['last 2 versions',
-                        'Explorer >= 10',
-                        'Android >= 4.1',
-                        'Safari >= 7',
-                        'iOS >= 7']
-            }),
-            svg({
-                svgo: true
-            }),
+            autoprefixer(config.autoprefixer),
+            svg(config.svg),
             zindex()
         ]))
         .set('filename', compileStep.inputPath)
@@ -57,7 +43,6 @@ Plugin.registerSourceHandler('styl', {archMatching: 'web'}, function (compileSte
             message: 'Stylus compiler error: ' + msg
         });
     };
-
     try {
         compiler.render(function (err, css) {
             if (err) {

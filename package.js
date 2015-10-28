@@ -18,7 +18,8 @@ Package.registerBuildPlugin({
         'poststylus': '0.2.1',
         'autoprefixer': '6.0.3',
         'postcss-svg': '1.0.1',
-        'postcss-zindex': '2.0.0'
+        'postcss-zindex': '2.0.0',
+        'fs-json': '0.1.2'
     }
 });
 
