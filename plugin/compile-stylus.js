@@ -14,14 +14,16 @@ Plugin.registerSourceHandler('styl', {archMatching: 'web'}, function (compileSte
     var options = fsjson.loadSync('./plugin/stylus.json');
     var file = fsjson.loadSync('./config/stylus.json');
 
-    if(!file) {
-        file = options;
+    mergeObj = function (a,b) {
+        var c = {}, key;
+        for (key in a) {
+            if (a.hasOwnProperty(key)) {
+                c[key] = key in b ? b[key] : a[key];
+            }
+        }
+        return c;
     }
-    var config = {
-        url: file.url || {},
-        autoprefixer: file.autoprefixer || options.autoprefixer,
-        svg: file.svg || options.svg
-    };
+    var config = mergeObj(options, file);
 
 
     var source = compileStep.read().toString('utf8');
