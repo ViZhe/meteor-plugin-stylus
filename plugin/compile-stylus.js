@@ -9,13 +9,18 @@ var svg = Npm.require('postcss-svg');
 var zindex = Npm.require('postcss-zindex');
 
 
-
 Plugin.registerSourceHandler('styl', {archMatching: 'web'}, function (compileStep) {
     var configpath = path.join(process.cwd(), '/config/stylus.json');
     var config;
 
-    if(!fs.existsSync(configpath)) {
-      config = {
+    if(fs.existsSync(configpath)) {
+        try {
+            config = JSON.parse(fs.readFileSync(configpath, 'utf-8'));
+        } catch(e) {
+            throw 'Stylus configuration file error: ' + e;
+        }
+    }
+    var options = {
         url: {
             limit: 30000
         },
@@ -25,13 +30,16 @@ Plugin.registerSourceHandler('styl', {archMatching: 'web'}, function (compileSte
         svg: {
             svgo: true
         }
-      };
-    } else {
-        try {
-            config = JSON.parse(fs.readFileSync(configpath,'utf-8'));
-        } catch(e) {
-            throw "Stylus configuration file error: " + e;
-        }
+    };
+
+    if(!config.url) {
+        config.url =  options.url;
+    }
+    if(!config.autoprefixer) {
+        config.autoprefixer =  options.autoprefixer;
+    }
+    if(!config.svg) {
+        config.svg =  options.svg;
     }
 
     var source = compileStep.read().toString('utf8');

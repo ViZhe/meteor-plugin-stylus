@@ -1,7 +1,7 @@
 
 Package.describe({
     name: 'vizhe:stylus',
-    version: '0.0.6',
+    version: '0.0.7',
     summary: 'Stylus + url + autoprefixer + postcss-svg + postcss-zindex',
     git: 'https://github.com/hoppas/meteor-plugin-stylus.git',
     documentation: 'README.md'
@@ -18,8 +18,7 @@ Package.registerBuildPlugin({
         'poststylus': '0.2.1',
         'autoprefixer': '6.0.3',
         'postcss-svg': '1.0.1',
-        'postcss-zindex': '2.0.0',
-        'fs-json': '0.1.2'
+        'postcss-zindex': '2.0.0'
     }
 });
 
