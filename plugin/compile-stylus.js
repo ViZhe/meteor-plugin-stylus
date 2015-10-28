@@ -1,6 +1,7 @@
 
-var fsjson = Npm.require('fs-json')();
 var path = Npm.require('path');
+var fs = Npm.require('fs');
+
 var stylus = Npm.require('stylus');
 var poststylus = Npm.require('poststylus');
 var autoprefixer = Npm.require('autoprefixer');
@@ -8,24 +9,30 @@ var svg = Npm.require('postcss-svg');
 var zindex = Npm.require('postcss-zindex');
 
 
+
 Plugin.registerSourceHandler('styl', {archMatching: 'web'}, function (compileStep) {
+    var configpath = path.join(process.cwd(), '/config/stylus.json');
+    var config;
 
-
-    var options = fsjson.loadSync('./plugin/stylus.json');
-    var file = fsjson.load('./config/stylus.json', function(data) {
-        result = data ? false : data;
-    });
-    mergeObj = function (a,b) {
-        var c = {}, key;
-        for (key in a) {
-            if (a.hasOwnProperty(key)) {
-                c[key] = typeof b[key] != 'undefined' ? b[key] : a[key];
-            }
+    if(!fs.existsSync(configpath)) {
+      config = {
+        url: {
+            limit: 30000
+        },
+        autoprefixer: {
+            browser: ['last 2 versions', 'Explorer >= 10', 'Android >= 4.1', 'Safari >= 7', 'iOS >= 7']
+        },
+        svg: {
+            svgo: true
         }
-        return c;
+      };
+    } else {
+        try {
+            config = JSON.parse(fs.readFileSync(configpath,'utf-8'));
+        } catch(e) {
+            throw "Stylus configuration file error: " + e;
+        }
     }
-    var config = mergeObj(options, file);
-
 
     var source = compileStep.read().toString('utf8');
     var compiler = stylus(source)
