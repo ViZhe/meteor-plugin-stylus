@@ -12,13 +12,14 @@ Plugin.registerSourceHandler('styl', {archMatching: 'web'}, function (compileSte
 
 
     var options = fsjson.loadSync('./plugin/stylus.json');
-    var file = fsjson.loadSync('./config/stylus.json');
-
+    var file = fsjson.load('./config/stylus.json', function(data) {
+        result = data ? false : data;
+    });
     mergeObj = function (a,b) {
         var c = {}, key;
         for (key in a) {
             if (a.hasOwnProperty(key)) {
-                c[key] = key in b ? b[key] : a[key];
+                c[key] = typeof b[key] != 'undefined' ? b[key] : a[key];
             }
         }
         return c;
