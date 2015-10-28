@@ -22,7 +22,7 @@ Package.registerBuildPlugin({
     }
 });
 
-Package.on_test(function (api) {
+Package.onTest(function (api) {
     api.use(['vizhe:stylus', 'tinytest', 'test-helpers', 'templating']);
     api.addAssets([
         'tests/tinytest.png',
