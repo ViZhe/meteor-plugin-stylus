@@ -74,3 +74,20 @@ stylusTest(
     'z-index',
     '2'
 );
+
+// Stylus import
+stylusTest(
+    'stylus - import relative',
+    'stylus_test_import',
+    'stylus_import_relative',
+    'font-size',
+    '20px'
+);
+
+stylusTest(
+    'stylus - import absolute',
+    'stylus_test_import',
+    'stylus_import_absolute',
+    'font-size',
+    '20px'
+);
