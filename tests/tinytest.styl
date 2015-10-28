@@ -1,0 +1,33 @@
+
+// Stylus
+$dashy = dashed
+.stylus_presence
+    border-left 1px $dashy black
+
+
+// Autoprefixer
+.stylus_autoprefixer
+    column-count 2
+
+
+// Postcss-image
+.stylus_url_absolute
+    background-image url('./tests/tinytest.png')
+
+.stylus_url_relative
+    background-image url('tinytest.png')
+
+
+// Postcss-svg
+.stylus_svg
+    background-image svg('./tests/tinytest.svg', 'fill: red')
+
+
+// Postcss-zindex
+.stylus_zindex_first
+    position relative
+    z-index 10
+
+.stylus_zindex_second
+    position relative
+    z-index 15
