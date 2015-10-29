@@ -13,6 +13,7 @@ Plugin.registerSourceHandler('styl', {archMatching: 'web'}, function (compileSte
     var configpath = path.join(process.cwd(), '/config/stylus.json');
     var config;
     var options = {
+        filename: 'hoppas',
         url: {
             paths: ['./public/'],
             limit: 30000
@@ -31,6 +32,9 @@ Plugin.registerSourceHandler('styl', {archMatching: 'web'}, function (compileSte
             config = JSON.parse(fs.readFileSync(configpath, 'utf-8'));
         } catch(e) {
             throw 'Stylus configuration file error: ' + e;
+        }
+        if(!config.filename) {
+            config.filename =  options.filename;
         }
         if(!config.url) {
             config.url =  options.url;
@@ -70,7 +74,7 @@ Plugin.registerSourceHandler('styl', {archMatching: 'web'}, function (compileSte
                 return errCb(err.message);
             }
             compileStep.addStylesheet({
-                path: compileStep.inputPath + '.css',
+                path: options.filename + '.css',
                 data: css
             });
         });
