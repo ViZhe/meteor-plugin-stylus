@@ -10,7 +10,6 @@ For configure the package, create the file `/config/stylus.json`.
 Default options:
 ```
 {
-    filename: "hoppas",
     "url": {
         "paths": ["./public/"],
         "limit": 30000
