@@ -1,7 +1,7 @@
 
 Package.describe({
     name: 'vizhe:stylus',
-    version: '0.0.9',
+    version: '0.0.10',
     summary: 'Stylus + url + autoprefixer + postcss-svg + postcss-zindex',
     git: 'https://github.com/hoppas/meteor-plugin-stylus.git',
     documentation: 'README.md'
@@ -25,8 +25,8 @@ Package.registerBuildPlugin({
 Package.onTest(function (api) {
     api.use(['vizhe:stylus', 'tinytest', 'test-helpers', 'templating']);
     api.addAssets([
-        'tests/tinytest.png',
-        'tests/tinytest.svg'
+        'public/tinytest.png',
+        'public/tinytest.svg'
     ], 'client')
     api.add_files([
         'tests/tinytest.html',

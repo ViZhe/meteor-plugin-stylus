@@ -11,6 +11,7 @@ Default options:
 ```
 {
     "url": {
+        "paths": ["./public/"],
         "limit": 30000
     },
     "autoprefixer": {
@@ -21,6 +22,7 @@ Default options:
                     "iOS >= 7"]
     },
     "svg": {
+        "paths": ["./public/"],
         "svgo": true
     }
 }

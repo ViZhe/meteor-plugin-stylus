@@ -14,12 +14,14 @@ Plugin.registerSourceHandler('styl', {archMatching: 'web'}, function (compileSte
     var config;
     var options = {
         url: {
+            paths: ['./public/'],
             limit: 30000
         },
         autoprefixer: {
             browser: ['last 2 versions', 'Explorer >= 10', 'Android >= 4.1', 'Safari >= 7', 'iOS >= 7']
         },
         svg: {
+            paths: ['./public/'],
             svgo: true
         }
     };
