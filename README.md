@@ -5,9 +5,14 @@
 providing an efficient, dynamic, and expressive way to generate CSS.
 Supporting both an indented syntax and regular CSS style.
 
-### Options
-For configure the package, create the file `/config/stylus.json`.
-Default options:
+### File organization
+```
+/client/styles/vars/        # For .styl files with variables
+/client/styles/mixins/      # For .styl files with mixins
+/config/stylus.json         # Configuration file
+```
+
+### Default configuration
 ```
 {
     "url": {

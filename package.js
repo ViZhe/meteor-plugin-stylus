@@ -9,9 +9,9 @@ Package.describe({
 
 Package.registerBuildPlugin({
     name: 'compileStylus',
-    use: [],
+    use: ['coffeescript'],
     sources: [
-        'plugin/compile-stylus.js'
+        'plugin/compile-stylus.coffee'
     ],
     npmDependencies: {
         'stylus': '0.52.4',
@@ -23,14 +23,21 @@ Package.registerBuildPlugin({
 });
 
 Package.onTest(function (api) {
-    api.use(['vizhe:stylus', 'tinytest', 'test-helpers', 'templating']);
+    api.use([
+        'vizhe:stylus',
+        'tinytest',
+        'coffeescript',
+        'test-helpers',
+        'templating'
+    ]);
     api.addAssets([
         'public/tinytest.png',
         'public/tinytest.svg'
     ], 'client')
     api.add_files([
         'tests/tinytest.html',
+        'tests/tinytest.import.styl',
         'tests/tinytest.styl',
-        'tests/tinytest.js'
+        'tests/tinytest.coffee'
     ], 'client');
 });
