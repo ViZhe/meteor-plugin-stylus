@@ -5,15 +5,10 @@
 providing an efficient, dynamic, and expressive way to generate CSS.
 Supporting both an indented syntax and regular CSS style.
 
-### Variables & Mixins
-```
-/client/styles/vars/        # For .styl files with variables
-/client/styles/mixins/      # For .styl files with mixins
-/config/stylus.json         # Configuration file
-```
 
 ### Configuration
 For configure the package, create the file /config/stylus.json.
+
 Default options:
 ```
 {
@@ -35,6 +30,18 @@ Default options:
 }
 ```
 
+
+### Variables & Mixins
+
+Files with suffix `var` and `mixin` are include to the beginning of each file.
+
+Example names:
+```
+colors.var.styl
+position.mixin.styl
+```
+
+
 ### Imports
 If you want to `@import` a file, give it the extension `.import.styl`
 to prevent Meteor from processing it independently.
@@ -43,6 +50,7 @@ This packages supports both relative and absolute `@import`.
 Absolute `@import` are relative to your root meteor application directory,
 you shouldn't precede its path by `/`.
 
+
 ### Packages
  * [Stylus](https://github.com/stylus/stylus) with [url](http://stylus-lang.com/docs/functions.url.html)– 0.52.4
  * [poststylus](https://github.com/seaneking/poststylus) – 0.2.1
@@ -50,11 +58,13 @@ you shouldn't precede its path by `/`.
  * [postcss-svg](https://github.com/Pavliko/postcss-svg) – 1.0.1
  * [postcss-zindex](https://github.com/ben-eb/postcss-zindex) – 2.0.0
 
+
 ### Testing
 Run command
 ```
 meteor test-packages ./
 ```
+
 
 ### NOTE
 This may not be compatible with other Meteor Stylus libraries. Please
