@@ -84,3 +84,12 @@ stylusTest(
     'font-size',
     '20px'
 )
+
+# Var/mixin import
+stylusTest(
+    'stylus - Var/mixin import',
+    'stylus_test_var',
+    'stylus_var',
+    'font-size',
+    '30px'
+)

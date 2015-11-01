@@ -1,3 +1,4 @@
+
 path = Npm.require('path')
 fs = Npm.require('fs')
 
@@ -14,12 +15,8 @@ extend = (a, b) ->
     return a
 
 Plugin.registerSourceHandler 'styl', {archMatching: 'web'}, (compileStep) ->
-    filePath = path.dirname(compileStep.inputPath)
-    if filePath == 'client/styles/mixins' or filePath == 'client/styles/vars'
-        return
-
     projectPath = process.cwd()
-    configpath = path.join(projectPath, '/config/stylus.json')
+    configPath = path.join(projectPath, '/config/stylus.json')
     config = options =
         url:
             paths: [ './public/' ]
@@ -36,9 +33,9 @@ Plugin.registerSourceHandler 'styl', {archMatching: 'web'}, (compileStep) ->
             paths: [ './public/' ]
             svgo: true
 
-    if fs.existsSync(configpath)
+    if fs.existsSync(configPath)
         try
-            config = JSON.parse(fs.readFileSync(configpath, 'utf-8'))
+            config = JSON.parse(fs.readFileSync(configPath, 'utf-8'))
         catch e
             throw 'Stylus configuration file error: ' + e
         config = extend(options, config)
@@ -48,24 +45,8 @@ Plugin.registerSourceHandler 'styl', {archMatching: 'web'}, (compileStep) ->
 
     source = compileStep.read().toString('utf8')
     compiler = stylus(source)
-
-    varsPath = projectPath + '/client/styles/vars/'
-    try
-        stats = fs.lstatSync(varsPath)
-        if stats.isDirectory()
-            compiler.import(varsPath + '*')
-
-        stats = fs.lstatSync(mixinsPath)
-        if stats.isDirectory()
-            compiler.import(mixinsPath + '*')
-
-    mixinsPath = projectPath + '/client/styles/mixins/'
-    try
-        stats = fs.lstatSync(mixinsPath)
-        if stats.isDirectory()
-            compiler.import(mixinsPath + '*')
-
-    compiler = compiler
+        .import('*/*.var.styl')
+        .import('*/*.mixin.styl')
         .define('url', stylus.url(config.url))
         .use(poststylus([
             autoprefixer(config.autoprefixer)
@@ -93,3 +74,5 @@ Plugin.registerSourceHandler 'styl', {archMatching: 'web'}, (compileStep) ->
     return
 
 Plugin.registerSourceHandler 'import.styl', ->
+Plugin.registerSourceHandler 'mixin.styl', ->
+Plugin.registerSourceHandler 'var.styl', ->
