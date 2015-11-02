@@ -7,7 +7,7 @@ Supporting both an indented syntax and regular CSS style.
 
 
 ### Configuration
-For configure the package, create the file /config/stylus.json.
+For configure the package, create the file `/config/stylus.json`.
 
 Default options:
 ```
