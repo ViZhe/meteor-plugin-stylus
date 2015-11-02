@@ -14,6 +14,17 @@ extend = (a, b) ->
             a[key] = b[key]
     return a
 
+
+Plugin.registerSourceHandler 'import.styl', ->
+
+mixinFiles = []
+Plugin.registerSourceHandler 'mixin.styl', (compileStep) ->
+    mixinFiles.push compileStep._fullInputPath
+
+varsFiles = []
+Plugin.registerSourceHandler 'var.styl', (compileStep) ->
+    varsFiles.push compileStep._fullInputPath
+
 Plugin.registerSourceHandler 'styl', {archMatching: 'web'}, (compileStep) ->
     projectPath = process.cwd()
     configPath = path.join(projectPath, '/config/stylus.json')
@@ -45,8 +56,15 @@ Plugin.registerSourceHandler 'styl', {archMatching: 'web'}, (compileStep) ->
 
     source = compileStep.read().toString('utf8')
     compiler = stylus(source)
-        .import('*/*.var.styl')
-        .import('*/*.mixin.styl')
+
+    if mixinFiles
+        for mixinFile in mixinFiles
+            compiler.import(mixinFile)
+    if varsFiles
+        for varsFile in varsFiles
+            compiler.import(varsFile)
+
+    compiler
         .define('url', stylus.url(config.url))
         .use(poststylus([
             autoprefixer(config.autoprefixer)
@@ -72,7 +90,3 @@ Plugin.registerSourceHandler 'styl', {archMatching: 'web'}, (compileStep) ->
     catch err
         errCb err.message
     return
-
-Plugin.registerSourceHandler 'import.styl', ->
-Plugin.registerSourceHandler 'mixin.styl', ->
-Plugin.registerSourceHandler 'var.styl', ->
