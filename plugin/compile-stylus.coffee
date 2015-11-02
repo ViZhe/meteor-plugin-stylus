@@ -19,11 +19,15 @@ Plugin.registerSourceHandler 'import.styl', ->
 
 mixinFiles = []
 Plugin.registerSourceHandler 'mixin.styl', (compileStep) ->
-    mixinFiles.push compileStep._fullInputPath
+    filePath = compileStep._fullInputPath
+    if mixinFiles.indexOf(filePath) == -1
+        mixinFiles.push filePath
 
 varsFiles = []
 Plugin.registerSourceHandler 'var.styl', (compileStep) ->
-    varsFiles.push compileStep._fullInputPath
+    filePath = compileStep._fullInputPath
+    if varsFiles.indexOf(filePath) == -1
+        varsFiles.push filePath
 
 Plugin.registerSourceHandler 'styl', {archMatching: 'web'}, (compileStep) ->
     projectPath = process.cwd()
