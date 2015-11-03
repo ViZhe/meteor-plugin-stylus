@@ -1,7 +1,7 @@
 
 Package.describe({
     name: 'vizhe:stylus',
-    version: '0.2.3',
+    version: '0.3.0',
     summary: 'Stylus + url + autoprefixer + postcss-svg + postcss-zindex',
     git: 'https://github.com/hoppas/meteor-plugin-stylus.git',
     documentation: 'README.md'
@@ -37,7 +37,7 @@ Package.onTest(function (api) {
     api.add_files([
         'tests/tinytest.html',
         'tests/tinytest.import.styl',
-        'tests/tinytest.var.styl',
+        'client/styles/vars/tinytest.styl',
         'tests/tinytest.styl',
         'tests/tinytest.coffee'
     ], 'client');

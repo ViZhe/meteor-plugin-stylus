@@ -17,19 +17,13 @@ extend = (a, b) ->
 
 Plugin.registerSourceHandler 'import.styl', ->
 
-mixinFiles = []
-Plugin.registerSourceHandler 'mixin.styl', (compileStep) ->
-    filePath = compileStep._fullInputPath
-    if mixinFiles.indexOf(filePath) == -1
-        mixinFiles.push filePath
-
-varsFiles = []
-Plugin.registerSourceHandler 'var.styl', (compileStep) ->
-    filePath = compileStep._fullInputPath
-    if varsFiles.indexOf(filePath) == -1
-        varsFiles.push filePath
-
 Plugin.registerSourceHandler 'styl', {archMatching: 'web'}, (compileStep) ->
+    varsDir = 'client/styles/vars'
+    mixinsDir = 'client/styles/mixins'
+    inputDirPath = path.dirname(compileStep.inputPath)
+    if inputDirPath == varsDir || inputDirPath == mixinsDir
+        return
+
     projectPath = process.cwd()
     configPath = path.join(projectPath, '/config/stylus.json')
     config = options =
@@ -61,12 +55,11 @@ Plugin.registerSourceHandler 'styl', {archMatching: 'web'}, (compileStep) ->
     source = compileStep.read().toString('utf8')
     compiler = stylus(source)
 
-    if mixinFiles
-        for mixinFile in mixinFiles
-            compiler.import(mixinFile)
-    if varsFiles
-        for varsFile in varsFiles
-            compiler.import(varsFile)
+    if fs.existsSync(varsDir) && !!fs.readdirSync(varsDir)
+        compiler.import(varsDir + '/*')
+
+    if fs.existsSync(mixinsDir) && !!fs.readdirSync(mixinsDir)
+        compiler.import(mixinsDir + '/*')
 
     compiler
         .define('url', stylus.url(config.url))
@@ -75,7 +68,6 @@ Plugin.registerSourceHandler 'styl', {archMatching: 'web'}, (compileStep) ->
             svg(config.svg)
             zindex()
         ]))
-        .set('filename', compileStep.inputPath)
         .include(path.dirname(compileStep._fullInputPath))
         .include(projectPath)
 

@@ -31,14 +31,13 @@ Default options:
 ```
 
 
-### Variables & Mixins
+### Vars & mixins
 
-Files with suffix `var` and `mixin` are include to the beginning of each file.
+The files from these directory include at the start of each styl file.
 
-Example names:
 ```
-colors.var.styl
-position.mixin.styl
+client/styles/vars/    # For .styl files with vars
+client/styles/mixins/  # For .styl files with mixins
 ```
 
 
