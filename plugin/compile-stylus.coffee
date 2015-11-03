@@ -55,10 +55,10 @@ Plugin.registerSourceHandler 'styl', {archMatching: 'web'}, (compileStep) ->
     source = compileStep.read().toString('utf8')
     compiler = stylus(source)
 
-    if fs.existsSync(varsDir) && !!fs.readdirSync(varsDir)
+    if fs.existsSync(varsDir) && !!fs.readdirSync(varsDir)[0]
         compiler.import(varsDir + '/*')
 
-    if fs.existsSync(mixinsDir) && !!fs.readdirSync(mixinsDir)
+    if fs.existsSync(mixinsDir) && !!fs.readdirSync(mixinsDir)[0]
         compiler.import(mixinsDir + '/*')
 
     compiler
