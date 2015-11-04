@@ -39,8 +39,8 @@ Plugin.registerSourceHandler 'styl', {archMatching: 'web'}, (compileStep) ->
                 'iOS >= 7'
             ]
         svg:
-            paths: [ './public/' ]
             svgo: true
+            ei: false
 
     if fs.existsSync(configPath)
         try
