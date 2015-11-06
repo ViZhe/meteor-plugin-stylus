@@ -1,7 +1,7 @@
 
 Package.describe({
     name: 'vizhe:stylus',
-    version: '0.4.0',
+    version: '0.4.1',
     summary: 'Stylus + url + autoprefixer + postcss-svg + postcss-zindex',
     git: 'https://github.com/hoppas/meteor-plugin-stylus.git',
     documentation: 'README.md'
@@ -9,7 +9,7 @@ Package.describe({
 
 Package.registerBuildPlugin({
     name: 'compileStylus',
-    use: ['coffeescript@1.0.11', 'underscore'],
+    use: ['coffeescript@1.0.11', 'underscore@1.0.4'],
     sources: [
         'plugin/sort.coffee',
         'plugin/compile-stylus.coffee'
