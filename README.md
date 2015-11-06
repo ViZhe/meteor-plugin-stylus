@@ -11,8 +11,13 @@ Supporting both an indented syntax and regular CSS style.
 
 1. takes all `.styl` files
 2. excludes files with prefix `.import` (`.import.styl`)
-3. files are sorted according to template:
-    ```
+3. files are sorted according to template
+4. merge files
+5. compile into css
+
+
+#### Template file sorting
+```
 client/styles/vars/
 client/styles/mixins/
 client/styles/top/
@@ -20,10 +25,7 @@ client/styles/middle/
 client/styles/bottom/
 client/lib/
 *
-    ```
-4. merge files
-5. compile into css
-
+```
 
 ### Imports
 If you want to `@import` a file, give it the extension `.import.styl`
