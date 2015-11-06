@@ -70,17 +70,9 @@ stylusTest(
 
 # Stylus import
 stylusTest(
-    'stylus - import absolute',
+    'stylus - import',
     'stylus_test_import',
-    'stylus_import_absolute',
-    'font-size',
-    '20px'
-)
-
-stylusTest(
-    'stylus - import relative',
-    'stylus_test_import',
-    'stylus_import_relative',
+    'stylus_import',
     'font-size',
     '20px'
 )

@@ -1,5 +1,4 @@
 
-path = Npm.require('path')
 fs = Npm.require('fs')
 
 stylus = Npm.require('stylus')
@@ -8,27 +7,38 @@ autoprefixer = Npm.require('autoprefixer')
 svg = Npm.require('postcss-svg')
 zindex = Npm.require('postcss-zindex')
 
-extend = (a, b) ->
-    for key of b
-        if b.hasOwnProperty(key)
-            a[key] = b[key]
-    return a
 
+Plugin.registerCompiler {
+    extensions: ['styl']
+    archMatching: 'web'
+}, ->
+    compiler = new StylusCompiler
 
-Plugin.registerSourceHandler 'import.styl', ->
+StylusCompiler = ->
 
-Plugin.registerSourceHandler 'styl', {archMatching: 'web'}, (compileStep) ->
-    varsDir = 'client/styles/vars'
-    mixinsDir = 'client/styles/mixins'
-    inputDirPath = path.dirname(compileStep.inputPath)
-    if inputDirPath == varsDir || inputDirPath == mixinsDir
+StylusCompiler::processFilesForTarget = (files) ->
+    files.sort(sortFiles)
+
+    source = ''
+    files.forEach (file) ->
+        if /\.import\.styl$/.test(file.getPathInPackage())
+            return
+        source += file.getContentsAsString()
         return
 
     projectPath = process.cwd()
-    configPath = path.join(projectPath, '/config/stylus.json')
-    config = options =
+    configPath = projectPath + '/config/stylus.json'
+    config = {}
+
+    if fs.existsSync(configPath)
+        try
+            config = JSON.parse(fs.readFileSync(configPath, 'utf-8'))
+        catch e
+            throw 'Stylus configuration file error: ' + e
+
+    config = _.extend(
         url:
-            paths: [ './public/' ]
+            paths: ['./public/']
             limit: 30000
         autoprefixer:
             browser: [
@@ -42,47 +52,33 @@ Plugin.registerSourceHandler 'styl', {archMatching: 'web'}, (compileStep) ->
             svgo: true
             ei: false
 
-    if fs.existsSync(configPath)
-        try
-            config = JSON.parse(fs.readFileSync(configPath, 'utf-8'))
-        catch e
-            throw 'Stylus configuration file error: ' + e
-        config = extend(options, config)
-    else
-        config = options
+        , config
+    )
 
-
-    source = compileStep.read().toString('utf8')
     compiler = stylus(source)
-
-    if fs.existsSync(varsDir) && !!fs.readdirSync(varsDir)[0]
-        compiler.import(varsDir + '/*')
-
-    if fs.existsSync(mixinsDir) && !!fs.readdirSync(mixinsDir)[0]
-        compiler.import(mixinsDir + '/*')
-
-    compiler
         .define('url', stylus.url(config.url))
         .use(poststylus([
-            autoprefixer(config.autoprefixer)
             svg(config.svg)
             zindex()
+            autoprefixer(config.autoprefixer)
         ]))
-        .include(path.dirname(compileStep._fullInputPath))
         .include(projectPath)
 
-    errCb = (msg) ->
-        compileStep.error message: 'Stylus compiler error: ' + msg
+    errMes = (msg) ->
+        files[0].error
+            message: 'Stylus compiler error: ' + msg
+            sourcePath: 'compiled-styles.css'
         return
 
     try
         compiler.render (err, css) ->
             if err
-                return errCb(err.message)
-            compileStep.addStylesheet
-                path: compileStep.inputPath + '.css'
+                return errMes err.message
+
+            files[0].addStylesheet
                 data: css
+                path: 'compiled-styles.css'
             return
+
     catch err
-        errCb err.message
-    return
+        errMes err.message

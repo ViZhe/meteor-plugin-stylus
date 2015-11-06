@@ -12,7 +12,7 @@ $dashy = dashed
 
 // Postcss-image
 .stylus_url
-    background-image url('public/tinytest.png')
+    background-image url('tinytest.png')
 
 
 // Postcss-svg
@@ -31,11 +31,10 @@ $dashy = dashed
 
 
 // Stylus import
-.stylus_import_absolute
-    @import './tests/tinytest.import'
+.stylus_import
+    @import 'tests/tinytest.import'
 
-.stylus_import_relative
-    @import 'tinytest.import'
 
+// Stylus var
 .stylus_var
     font-size $testVar

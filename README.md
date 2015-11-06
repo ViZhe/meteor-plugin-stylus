@@ -6,6 +6,33 @@ providing an efficient, dynamic, and expressive way to generate CSS.
 Supporting both an indented syntax and regular CSS style.
 
 
+
+### How it work
+
+1. takes all `.styl` files
+2. excludes files with prefix `.import` (`.import.styl`)
+3. files are sorted according to template:
+    ```
+client/styles/vars/
+client/styles/mixins/
+client/styles/top/
+client/styles/middle/
+client/styles/bottom/
+client/lib/
+*
+    ```
+4. merge files
+5. compile into css
+
+
+### Imports
+If you want to `@import` a file, give it the extension `.import.styl`
+to prevent Meteor from processing it independently.
+
+This packages supports only absolute `@import`
+from root meteor application directory.
+
+
 ### Configuration
 For configure the package, create the file `/config/stylus.json`.
 
@@ -24,38 +51,19 @@ Default options:
                     "iOS >= 7"]
     },
     "svg": {
-        "paths": ["./public/"],
-        "svgo": true
+        "svgo": true,
+        "ei": false
     }
 }
 ```
 
 
-### Vars & mixins
-
-The files from these directory include at the start of each styl file.
-
-```
-client/styles/vars/    # For .styl files with vars
-client/styles/mixins/  # For .styl files with mixins
-```
-
-
-### Imports
-If you want to `@import` a file, give it the extension `.import.styl`
-to prevent Meteor from processing it independently.
-
-This packages supports both relative and absolute `@import`.
-Absolute `@import` are relative to your root meteor application directory,
-you shouldn't precede its path by `/`.
-
-
-### Packages
+### Stylus plagins
  * [Stylus](https://github.com/stylus/stylus) with [url](http://stylus-lang.com/docs/functions.url.html)– 0.52.4
  * [poststylus](https://github.com/seaneking/poststylus) – 0.2.1
- * [autoprefixer](https://github.com/postcss/autoprefixer) – 6.0.3
  * [postcss-svg](https://github.com/Pavliko/postcss-svg) – 1.0.1
  * [postcss-zindex](https://github.com/ben-eb/postcss-zindex) – 2.0.0
+ * [autoprefixer](https://github.com/postcss/autoprefixer) – 6.0.3
 
 
 ### Testing

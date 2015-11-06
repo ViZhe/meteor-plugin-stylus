@@ -1,7 +1,7 @@
 
 Package.describe({
     name: 'vizhe:stylus',
-    version: '0.3.3',
+    version: '0.4.0',
     summary: 'Stylus + url + autoprefixer + postcss-svg + postcss-zindex',
     git: 'https://github.com/hoppas/meteor-plugin-stylus.git',
     documentation: 'README.md'
@@ -9,8 +9,9 @@ Package.describe({
 
 Package.registerBuildPlugin({
     name: 'compileStylus',
-    use: ['coffeescript@1.0.11'],
+    use: ['coffeescript@1.0.11', 'underscore'],
     sources: [
+        'plugin/sort.coffee',
         'plugin/compile-stylus.coffee'
     ],
     npmDependencies: {
@@ -20,6 +21,10 @@ Package.registerBuildPlugin({
         'postcss-svg': '1.0.1',
         'postcss-zindex': '2.0.0'
     }
+});
+
+Package.onUse(function(api) {
+    api.use('isobuild:compiler-plugin@1.0.0');
 });
 
 Package.onTest(function (api) {
